@@ -18,10 +18,14 @@ TcpServer::TcpServer(QObject *parent) :
 
 void TcpServer::newConnection_slot() {
     QTcpSocket *socket = server->nextPendingConnection();
+    QByteArray data;
 
-    QByteArray data = socket->readAll();
+    while (!data.contains("\n")) {
+        socket->waitForReadyRead();
+        data += socket->readAll();
+    }
 
-    socket->write("Hello client, this is my respone:" + data + "\r\n");
+    socket->write("Hello client, this is my response:" + data);
     socket->flush();
 
     socket->waitForBytesWritten(3000);
