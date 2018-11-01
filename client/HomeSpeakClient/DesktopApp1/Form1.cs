@@ -76,7 +76,7 @@ namespace DesktopApp1
 
         private void SendButton_Click(object sender, EventArgs e)
         {
-            ChatTextBox.Text += SendTextBox.Text;
+            //ChatTextBox.Text += SendTextBox.Text;
             SendTextBox.Text = null;
         }
 
@@ -111,7 +111,7 @@ namespace DesktopApp1
         {
             if (e.KeyCode == Keys.Enter)
             {
-                ChatTextBox.Text += SendTextBox.Text;
+                //ChatTextBox.Text += SendTextBox.Text;
                 SendTextBox.Text = null;
             }
         }
