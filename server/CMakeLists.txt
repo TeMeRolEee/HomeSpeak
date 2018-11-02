@@ -10,7 +10,7 @@ find_package(Qt5Widgets HINTS ~/Qt/5.11.1/gcc_64/)
 find_package(Qt5Sql HINTS ~/Qt/5.11.1/gcc_64)
 find_package(Qt5Network HINTS ~/Qt/5.11.1/gcc_64)
 
-add_executable(server main.cpp core.cpp dbmanager.cpp tcpserver.cpp client.cpp)
+add_executable(server main.cpp core.cpp dbmanager.cpp tcpserver.cpp client.cpp handlecommunication.cpp handlecommunication.h messagetypes.h)
 
 # linking
 target_link_libraries(server Qt5::Widgets Qt5::Sql Qt5::Network)

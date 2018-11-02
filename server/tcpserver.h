@@ -13,6 +13,7 @@ public:
     ~TcpServer();
 
 signals:
+	void newDataRecieved_signal(QByteArray data);
 
 public slots:
     void newConnection_slot();

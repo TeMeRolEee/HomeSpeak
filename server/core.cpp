@@ -1,5 +1,7 @@
 #include "core.h"
 
+#include "messagetypes.h"
+
 Core::Core() {
     tcpServer = new TcpServer();
 }
