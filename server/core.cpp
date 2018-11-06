@@ -10,7 +10,7 @@ Core::Core() {
 	connect(tcpServer, &TcpServer::newDataRecieved_signal, communicationHandler, &HandleCommunication::parseJson_slot);
 	connect(communicationHandler, &HandleCommunication::parsingDone_signal, communicationHandler,
 			&HandleCommunication::processMessage_slot);
-	connect(communicationHandler, &HandleCommunication::processMessageDone_signal, )
+	//connect(communicationHandler, &HandleCommunication::processMessageDone_signal, communicationHandler);
 }
 
 Core::~Core() {
