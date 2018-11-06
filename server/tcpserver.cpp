@@ -27,7 +27,7 @@ void TcpServer::newConnection_slot() {
 
     emit newDataRecieved_signal(data);
 
-    socket->write("Hello client, this is my response:" + data);
+    socket->write(data);
     socket->flush();
 
     socket->waitForBytesWritten(3000);
