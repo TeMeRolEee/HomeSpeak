@@ -42,7 +42,7 @@ namespace DesktopApp1
             this.RoomList = new System.Windows.Forms.TreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
-            //this.ChatTextBox = new ZBobb.AlphaBlendTextBox();
+            this.ChatTextBox = new ZBobb.AlphaBlendTextBox();
             this.SendTextBox = new System.Windows.Forms.TextBox();
             this.SendButton = new MaterialSkin.Controls.MaterialRaisedButton();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -178,7 +178,7 @@ namespace DesktopApp1
             this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel2.Controls.Add(this.pictureBox6);
             this.panel2.Controls.Add(this.pictureBox5);
-            //this.panel2.Controls.Add(this.ChatTextBox);
+            this.panel2.Controls.Add(this.ChatTextBox);
             this.panel2.Controls.Add(this.SendTextBox);
             this.panel2.Controls.Add(this.SendButton);
             this.panel2.Cursor = System.Windows.Forms.Cursors.Default;
@@ -190,18 +190,18 @@ namespace DesktopApp1
             // 
             // ChatTextBox
             // 
-            //this.ChatTextBox.BackAlpha = 10;
-            //this.ChatTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            //this.ChatTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            //this.ChatTextBox.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            //this.ChatTextBox.ForeColor = System.Drawing.SystemColors.Menu;
-            //this.ChatTextBox.Location = new System.Drawing.Point(90, 77);
-            //this.ChatTextBox.Multiline = true;
-            //this.ChatTextBox.Name = "ChatTextBox";
-            //this.ChatTextBox.ReadOnly = true;
-            //this.ChatTextBox.Size = new System.Drawing.Size(693, 435);
-            //this.ChatTextBox.TabIndex = 7;
-            //this.ChatTextBox.TextChanged += new System.EventHandler(this.ChatTextBox_TextChanged_1);
+            this.ChatTextBox.BackAlpha = 10;
+            this.ChatTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.ChatTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ChatTextBox.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ChatTextBox.ForeColor = System.Drawing.SystemColors.Menu;
+            this.ChatTextBox.Location = new System.Drawing.Point(90, 77);
+            this.ChatTextBox.Multiline = true;
+            this.ChatTextBox.Name = "ChatTextBox";
+            this.ChatTextBox.ReadOnly = true;
+            this.ChatTextBox.Size = new System.Drawing.Size(693, 435);
+            this.ChatTextBox.TabIndex = 7;
+            this.ChatTextBox.TextChanged += new System.EventHandler(this.ChatTextBox_TextChanged_1);
             // 
             // SendTextBox
             // 
@@ -224,7 +224,7 @@ namespace DesktopApp1
             this.SendButton.FlatAppearance.BorderSize = 0;
             this.SendButton.Icon = null;
             this.SendButton.Location = new System.Drawing.Point(731, 518);
-            //this.SendButton.MouseState = MaterialSkin.MouseState.HOVER;
+            this.SendButton.MouseState = MaterialSkin.MouseState.HOVER;
             this.SendButton.Name = "SendButton";
             this.SendButton.Primary = true;
             this.SendButton.Size = new System.Drawing.Size(56, 36);
@@ -316,7 +316,7 @@ namespace DesktopApp1
         private System.Windows.Forms.TreeView RoomList;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Panel panel2;
-        //private ZBobb.AlphaBlendTextBox ChatTextBox;
+        private ZBobb.AlphaBlendTextBox ChatTextBox;
         private System.Windows.Forms.TextBox SendTextBox;
         private MaterialSkin.Controls.MaterialRaisedButton SendButton;
         private System.Windows.Forms.Label UserLabel;
