@@ -2,6 +2,7 @@
 
 #include "tcpserver.h"
 #include "handlecommunication.h"
+#include "dbmanager.h"
 
 class Core : public QObject {
 	Q_OBJECT
@@ -10,6 +11,7 @@ public:
     ~Core();
     TcpServer *tcpServer;
     HandleCommunication *communicationHandler;
+    DBManager *dbManager;
 
 private:
 

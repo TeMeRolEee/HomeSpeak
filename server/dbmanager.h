@@ -7,9 +7,20 @@
 class DBManager {
 public:
     DBManager(const QString &path);
+
     bool initDataBase();
+
     bool addUser(const QVector<QString> &data);
-    bool checkUser(const QString &id);
+
+    bool checkUserIDExists(const QString &id);
+
+    bool checkUserEmail(const QString &email);
+
+    bool checkUserNickName(const QString &nickName);
+
+    int getUsersRoomId(const int &id);
+
+    int registerUser(const QString &email, const QString &password, const QString &nickName);
 
 private:
     QString dataBaseFilePath;

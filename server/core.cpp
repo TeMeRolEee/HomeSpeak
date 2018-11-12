@@ -6,6 +6,7 @@
 Core::Core() {
 	tcpServer = new TcpServer();
 	communicationHandler = new HandleCommunication();
+	dbManager = new DBManager("server.sqlite");
 
 	connect(tcpServer, &TcpServer::newDataRecieved_signal, communicationHandler, &HandleCommunication::parseJson_slot);
 	connect(communicationHandler, &HandleCommunication::parsingDone_signal, communicationHandler,
