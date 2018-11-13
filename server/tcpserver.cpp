@@ -6,6 +6,7 @@
 TcpServer::TcpServer(QObject *parent) :
     QObject(parent) {
     server = new QTcpServer(this);
+    clientVector = new QVector<QHostAddress*>();
 
     connect(server, &QTcpServer::newConnection, this, &TcpServer::newConnection_slot);
 
@@ -25,6 +26,8 @@ void TcpServer::newConnection_slot() {
         data += socket->readAll();
     }
 
+    storeIp(socket->peerAddress());
+
     emit newDataRecieved_signal(data);
 
     socket->write(data);
@@ -37,4 +40,20 @@ void TcpServer::newConnection_slot() {
 
 TcpServer::~TcpServer() {
     delete server;
+    delete clientVector;
+}
+
+void TcpServer::storeIp(const QHostAddress &ipAddress) {
+    if (!checkIpExists(ipAddress)) {
+        clientVector->append(ipAddress);
+    }
+}
+
+bool TcpServer::checkIpExists(const QHostAddress &ipAddress) {
+    for (auto i : *clientVector) {
+        if (i->toIPv4Address() == ipAddress.toIPv4Address()) {
+            return true;
+        }
+    }
+    return false;
 }

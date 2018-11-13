@@ -1,4 +1,5 @@
 #include <QtCore/QJsonDocument>
+
 #include "jsonparser.h"
 
 QJsonObject JsonParser::parseJson(const QByteArray &inputArray) {

@@ -20,4 +20,9 @@ public slots:
 
 private:
     QTcpServer *server = nullptr;
+    QVector<QHostAddress*> *clientVector;
+
+    void storeIp(const QHostAddress &ipAddress);
+
+    bool checkIpExists(const QHostAddress &ipAddress);
 };

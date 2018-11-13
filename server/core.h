@@ -11,7 +11,6 @@ public:
     ~Core();
     TcpServer *tcpServer;
     HandleCommunication *communicationHandler;
-    DBManager *dbManager;
 
 private:
 

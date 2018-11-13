@@ -6,12 +6,11 @@
 Core::Core() {
 	tcpServer = new TcpServer();
 	communicationHandler = new HandleCommunication();
-	dbManager = new DBManager("server.sqlite");
 
 	connect(tcpServer, &TcpServer::newDataRecieved_signal, communicationHandler, &HandleCommunication::parseJson_slot);
 	connect(communicationHandler, &HandleCommunication::parsingDone_signal, communicationHandler,
 			&HandleCommunication::processMessage_slot);
-	//connect(communicationHandler, &HandleCommunication::processMessageDone_signal, communicationHandler);
+	connect(communicationHandler, &HandleCommunication::processMessageDone_signal, this, &Core::processMessageAck_slot);
 }
 
 Core::~Core() {
@@ -20,16 +19,17 @@ Core::~Core() {
 }
 
 void Core::processMessageAck_slot(int returnCode) {
-	switch (returnCode){
-		case (int)LogLevel::DEBUG:
+	switch (returnCode) {
+		case static_cast<int>(LogLevel::INFO):
 			break;
-		case (int)LogLevel::INFO:
+		case static_cast<int>(LogLevel::DEBUG):
 			break;
-		case (int)LogLevel::WARNING:
+		case static_cast<int>(LogLevel::WARNING):
 			break;
-		case (int)LogLevel::CRITICAL:
+		case static_cast<int>(LogLevel::CRITICAL):
 			break;
-		default:break;
+		default:
+			break;
 	}
 
 

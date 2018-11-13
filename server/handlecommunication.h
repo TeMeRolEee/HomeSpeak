@@ -1,14 +1,21 @@
 #pragma once
 
 #include <QtCore/QObject>
+#include "jsonparser.h"
+#include "dbmanager.h"
 
 class HandleCommunication : public QObject {
 Q_OBJECT
 
 public:
-
+	HandleCommunication();
+	~HandleCommunication() override;
 
 private:
+	DBManager *dbManager;
+
+	JsonParser *jsonParser;
+
 	void handleConnectionRequest(const QJsonObject &messageData);
 
 	void handleDisconnection(const QJsonObject &messageData);
@@ -24,6 +31,8 @@ private:
 	void handleSpeakerMuteNotification(const QJsonObject &messageData);
 
 	void handleSpeakerUnMuteNotification(const QJsonObject &messageData);
+
+	void handleRegistrationRequest(const QJsonObject &messageData);
 
 public slots:
 

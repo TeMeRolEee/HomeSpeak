@@ -1,8 +1,9 @@
+#include <memory>
+#include <iostream>
+
 #include <QtCore/QCoreApplication>
 #include <QtCore/QCommandLineParser>
 
-#include <memory>
-#include <iostream>
 #include "core.h"
 
 
