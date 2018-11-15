@@ -30,35 +30,35 @@ namespace DesktopApp1
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Lobby");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Room1", 1, 2);
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Room2", 1, 2);
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Lobby");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Room1", 1, 2);
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Room2", 1, 2);
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.UserNameLabel = new System.Windows.Forms.Label();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.RoomList = new System.Windows.Forms.TreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.ChatTextBox = new ZBobb.AlphaBlendTextBox();
             this.SendTextBox = new System.Windows.Forms.TextBox();
             this.SendButton = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.UserLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel3.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -73,7 +73,7 @@ namespace DesktopApp1
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1050, 64);
             this.panel1.TabIndex = 0;
-            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BarraTitulo_MouseDown);
+            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             // 
             // pictureBox4
             // 
@@ -123,7 +123,7 @@ namespace DesktopApp1
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.panel3.Controls.Add(this.UserLabel);
+            this.panel3.Controls.Add(this.UserNameLabel);
             this.panel3.Controls.Add(this.pictureBox7);
             this.panel3.Controls.Add(this.RoomList);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Left;
@@ -131,6 +131,28 @@ namespace DesktopApp1
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(214, 586);
             this.panel3.TabIndex = 1;
+            // 
+            // UserNameLabel
+            // 
+            this.UserNameLabel.AutoSize = true;
+            this.UserNameLabel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.UserNameLabel.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.UserNameLabel.Location = new System.Drawing.Point(98, 38);
+            this.UserNameLabel.Name = "UserNameLabel";
+            this.UserNameLabel.Size = new System.Drawing.Size(67, 16);
+            this.UserNameLabel.TabIndex = 10;
+            this.UserNameLabel.Text = "UserName";
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
+            this.pictureBox7.Location = new System.Drawing.Point(12, 17);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(65, 62);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox7.TabIndex = 9;
+            this.pictureBox7.TabStop = false;
             // 
             // RoomList
             // 
@@ -142,22 +164,22 @@ namespace DesktopApp1
             this.RoomList.LineColor = System.Drawing.Color.White;
             this.RoomList.Location = new System.Drawing.Point(12, 85);
             this.RoomList.Name = "RoomList";
-            treeNode1.ImageIndex = 0;
-            treeNode1.Name = "Lobby";
-            treeNode1.SelectedImageKey = "(default)";
-            treeNode1.Text = "Lobby";
-            treeNode2.ImageIndex = 1;
-            treeNode2.Name = "Node9";
-            treeNode2.SelectedImageIndex = 2;
-            treeNode2.Text = "Room1";
-            treeNode3.ImageIndex = 1;
-            treeNode3.Name = "Node0";
-            treeNode3.SelectedImageIndex = 2;
-            treeNode3.Text = "Room2";
+            treeNode4.ImageIndex = 0;
+            treeNode4.Name = "Lobby";
+            treeNode4.SelectedImageKey = "(default)";
+            treeNode4.Text = "Lobby";
+            treeNode5.ImageIndex = 1;
+            treeNode5.Name = "Node9";
+            treeNode5.SelectedImageIndex = 2;
+            treeNode5.Text = "Room1";
+            treeNode6.ImageIndex = 1;
+            treeNode6.Name = "Node0";
+            treeNode6.SelectedImageIndex = 2;
+            treeNode6.Text = "Room2";
             this.RoomList.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.RoomList.SelectedImageIndex = 0;
             this.RoomList.Size = new System.Drawing.Size(169, 469);
             this.RoomList.TabIndex = 0;
@@ -187,6 +209,28 @@ namespace DesktopApp1
             this.panel2.Size = new System.Drawing.Size(836, 586);
             this.panel2.TabIndex = 2;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
+            this.pictureBox6.Location = new System.Drawing.Point(789, 114);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(35, 31);
+            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox6.TabIndex = 9;
+            this.pictureBox6.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
+            this.pictureBox5.Location = new System.Drawing.Point(789, 77);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(35, 31);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox5.TabIndex = 8;
+            this.pictureBox5.TabStop = false;
             // 
             // ChatTextBox
             // 
@@ -233,50 +277,6 @@ namespace DesktopApp1
             this.SendButton.UseVisualStyleBackColor = true;
             this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
             // 
-            // pictureBox5
-            // 
-            this.pictureBox5.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(789, 77);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(35, 31);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox5.TabIndex = 8;
-            this.pictureBox5.TabStop = false;
-            // 
-            // pictureBox6
-            // 
-            this.pictureBox6.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(789, 114);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(35, 31);
-            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox6.TabIndex = 9;
-            this.pictureBox6.TabStop = false;
-            // 
-            // pictureBox7
-            // 
-            this.pictureBox7.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
-            this.pictureBox7.Location = new System.Drawing.Point(12, 17);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(65, 62);
-            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox7.TabIndex = 9;
-            this.pictureBox7.TabStop = false;
-            // 
-            // UserLabel
-            // 
-            this.UserLabel.AutoSize = true;
-            this.UserLabel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.UserLabel.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.UserLabel.Location = new System.Drawing.Point(98, 38);
-            this.UserLabel.Name = "UserLabel";
-            this.UserLabel.Size = new System.Drawing.Size(67, 16);
-            this.UserLabel.TabIndex = 10;
-            this.UserLabel.Text = "UserName";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -296,11 +296,11 @@ namespace DesktopApp1
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -319,7 +319,7 @@ namespace DesktopApp1
         private ZBobb.AlphaBlendTextBox ChatTextBox;
         private System.Windows.Forms.TextBox SendTextBox;
         private MaterialSkin.Controls.MaterialRaisedButton SendButton;
-        private System.Windows.Forms.Label UserLabel;
+        private System.Windows.Forms.Label UserNameLabel;
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.PictureBox pictureBox5;

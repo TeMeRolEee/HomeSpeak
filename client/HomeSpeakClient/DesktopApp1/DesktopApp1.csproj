@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GuiManager.cs" />
+    <Compile Include="LoginData.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

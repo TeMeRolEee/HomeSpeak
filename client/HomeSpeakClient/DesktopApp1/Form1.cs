@@ -20,14 +20,15 @@ namespace DesktopApp1
     {
         public delegate void AddChatTextBoxDelegate(string txt);
 
+        TcpConnection Tcpconnection;
+        Messages Msgs;
+
         public Form1()
         {
             InitializeComponent();
             Console.WriteLine("itt volt az init component ");
-            TcpConnection Tcpconnection = new TcpConnection(this);
-            Messages Msgs = new Messages();
-            Thread SendMessage = new Thread(() => Tcpconnection.sendMessage("This message from client"));
-            SendMessage.Start();
+            Tcpconnection = new TcpConnection(this);
+            Msgs = new Messages();
         }
         public void AddChatBoxMethod(String myString)
         {
@@ -36,7 +37,6 @@ namespace DesktopApp1
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            Console.Write("its work");
             Application.Exit();
         }
 
@@ -53,7 +53,12 @@ namespace DesktopApp1
             Console.Write("its work");
             TreeNode treeNode = new TreeNode("Windows");
             RoomList.Nodes.Add(treeNode);
+            UserNameLabel.Text = LoginData.Instance.username;
         }
+        [DllImport("user32", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+        [DllImport("user32", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
@@ -94,18 +99,6 @@ namespace DesktopApp1
             else
                 ChatTextBox.AppendText("\r\n" + txt);
         }
-        public delegate void SetLabelTextDelegate(int number);
-        public void SetLabelText(int number)
-        {
-            if (this.InvokeRequired)
-            {
-                this.BeginInvoke(new SetLabelTextDelegate(SetLabelText),
-                                                 new object[] { number });
-
-                return;
-            }
-            ChatTextBox.Text = number.ToString();
-        }
 
         private void ChatLabel_Click(object sender, EventArgs e)
         {
@@ -117,17 +110,7 @@ namespace DesktopApp1
             
         }
 
-        private void BarraTitulo_MouseDown(object sender, MouseEventArgs e)
-        {
-            ReleaseCapture();
-            SendMessage(this.Handle, 0x112, 0xf012, 0);
-
-        }
-
-        [DllImport("user32", EntryPoint = "ReleaseCapture")]
-        private extern static void ReleaseCapture();
-        [DllImport("user32", EntryPoint = "SendMessage")]
-        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
+   
 
         private void SendTextBox_Enter(object sender, EventArgs e)
         {
@@ -140,6 +123,8 @@ namespace DesktopApp1
             {
                 ChatTextBox.Text += SendTextBox.Text;
                 SendTextBox.Text = null;
+                //Thread SendMessage = new Thread(() => Tcpconnection.sendMessage());
+               // SendMessage.Start();
             }
         }
 
@@ -152,6 +137,12 @@ namespace DesktopApp1
         private void ChatTextBox_TextChanged_1(object sender, EventArgs e)
         {
             SendTextBox.Text = null;
+        }
+
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012,0);
         }
     }
 }
