@@ -34,6 +34,7 @@ namespace DesktopApp1
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+                MessageBox.Show("Could not connect to server!");
             }
         }
         ~TcpConnection()
@@ -44,7 +45,7 @@ namespace DesktopApp1
             }
             catch (Exception E)
             {
-                Console.WriteLine("Coudnt Close Client");
+                Console.WriteLine("Could not Close Client");
             }
         }
         public void readMessage()
@@ -53,7 +54,7 @@ namespace DesktopApp1
             int i = 0;
             try
             {
-                Console.WriteLine("Msg from server");
+                
                 Byte[] bytes = new Byte[1024];
                 while (true)
                 {
@@ -64,6 +65,7 @@ namespace DesktopApp1
                         // Read incomming stream into byte arrary. 					
                         while ((length = stream.Read(bytes, 0, bytes.Length)) != 0)
                         {
+                            Console.WriteLine("Msg from server");
                             var incommingData = new byte[length];
                             Array.Copy(bytes, 0, incommingData, 0, length);
                             // Convert byte array to string message. 						
@@ -84,8 +86,8 @@ namespace DesktopApp1
 
         public void SendChatMessage(string Msg)
         {
-
             NetworkStream networkStream = client.GetStream();
+            Message Message = new Message();
             byte[] bytes = new byte[1024];
             byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(Msg);
             Console.WriteLine("Sending : " + Msg);
@@ -96,17 +98,8 @@ namespace DesktopApp1
         public void SendLoginMessage()
         {
 
-
-            /* public int type { get; set; }
-                 public int id { get; set; }
-                 public string username { get; set; }
-                 public string token { get; set; }
-                 public string email { get; set; }
-                 public string password { get; set; }*/
             LoginData.Instance.type = 10;
-            LoginData.Instance.id = 111;
             LoginData.Instance.username = "randomnevufaszi";
-            LoginData.Instance.token = "SHA256";
             LoginData.Instance.email = "randomfaszi@gmail.com";
             LoginData.Instance.password = "ezajelszavamfaszi";
             string jsonMessage = JsonConvert.SerializeObject(LoginData.Instance);

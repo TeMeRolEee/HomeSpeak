@@ -1,20 +1,15 @@
-﻿using System;
-
+﻿
 public class Message
 {
-    int type;
-    int id;
-    string token;
-    string msg;
-    int roomID;
-    int userID;
+    public int type { get; set; }
+    public string token { get; set; }
+    public Data[] data { get; set; }
+}
 
-
-	public Message()
-	{
-	}
-
-    public int Type { get => type; set => type = value; }
-    public int Id { get => id; set => id = value; }
-    public string Token { get => token; set => token = value; }
+public class Data
+{
+    public string message { get; set; }
+    public string roomID { get; set; }
+    public string userID { get; set; }
+    public long timestamp { get; set; }
 }

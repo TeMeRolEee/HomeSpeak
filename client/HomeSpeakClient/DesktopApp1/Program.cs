@@ -15,8 +15,11 @@ namespace DesktopApp1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Form1  form= new Form1();
-            Application.Run(form);
+            Form2  Login = new Form2();
+            Application.Run(Login);
+            Form1 Client  = new Form1();
+            Application.Run(Client);
+            Console.ReadKey();
         }
     }
 }
