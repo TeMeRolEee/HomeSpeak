@@ -68,7 +68,7 @@ void HandleCommunication::handleDisconnection(const QJsonObject &messageData) {
 }
 
 void HandleCommunication::handleTextMessage(const QJsonObject &messageData) {
-
+    
 }
 
 void HandleCommunication::handleSwitchRoom(const QJsonObject &messageData) {

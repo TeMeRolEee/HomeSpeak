@@ -45,15 +45,15 @@ TcpServer::~TcpServer() {
 
 void TcpServer::storeIp(const QHostAddress &ipAddress) {
     if (!checkIpExists(ipAddress)) {
-        clientVector->append(ipAddress);
+        //clientVector->append(ipAddress);
     }
 }
 
 bool TcpServer::checkIpExists(const QHostAddress &ipAddress) {
-    for (auto i : *clientVector) {
+    /*for (auto i : *clientVector) {
         if (i->toIPv4Address() == ipAddress.toIPv4Address()) {
             return true;
         }
-    }
+    }*/
     return false;
 }
