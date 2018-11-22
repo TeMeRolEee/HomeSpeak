@@ -9,7 +9,7 @@ public class Message
 public class Data
 {
     public string message { get; set; }
-    public string roomID { get; set; }
-    public string userID { get; set; }
-    public long timestamp { get; set; }
+    public int roomID { get; set; }
+    public int userID { get; set; }
+    public string timestamp { get; set; }
 }

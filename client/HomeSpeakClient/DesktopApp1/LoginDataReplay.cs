@@ -8,6 +8,44 @@ public class LoginDataReplay
     public int status { get; set; }
     public ReplayData[] data { get; set; }
 
+    public int getUserID()
+    {
+        int userID;
+        foreach (ReplayData rplData in data)
+        {
+            foreach (Room rooms in rplData.rooms)
+            {
+                foreach (User users in rooms.users)
+                {
+                    if (users.username == LoginData.Instance.username)
+                    {
+                        userID = users.userID;
+                        return userID;
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    public string getUserName(int userId)
+    {
+        foreach (ReplayData rplData in data)
+        {
+            foreach (Room rooms in rplData.rooms)
+            {
+                foreach (User users in rooms.users)
+                {
+                    if (users.userID == userId)
+                    {
+                        string username = users.username.ToString();
+                        return username;
+                    }
+                }
+            }
+        }
+        return null;
+    }
     public LoginDataReplay()
     {
 
@@ -42,4 +80,5 @@ public class User
 {
     public string username { get; set; }
     public int userID { get; set; }
+    
 }

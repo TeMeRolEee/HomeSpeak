@@ -61,24 +61,22 @@ public class LoginData
             }
             if (Replay.type == 0 && Replay.status == 0)
             {
+                client.Close();
                 return false;
             }
             else
             {
                 Console.WriteLine("kilep a loginbol");
+                client.Close();
                 return true;
             }
-            //client.Close();
         }
         catch (Exception e)
         {
             Console.WriteLine(e.ToString());
             MessageBox.Show("Could not connect to server!");
+            return false;
         }
-        
-        Console.WriteLine("kilep a loginbol");
-        return true;
-
         }
     }
 

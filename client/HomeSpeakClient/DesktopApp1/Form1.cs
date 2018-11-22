@@ -83,6 +83,7 @@ namespace DesktopApp1
         private void SendButton_Click(object sender, EventArgs e)
         {
             ChatTextBox.Text += SendTextBox.Text;
+            Tcpconnection.SendChatMessage(ChatTextBox.Text.ToString());
             SendTextBox.Text = null;
         }
         public void AddChatTextBox(string txt)

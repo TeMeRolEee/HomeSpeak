@@ -17,6 +17,8 @@ namespace DesktopApp1
         public Boolean getMsg = false;
         private Thread clientReceiveThread;
         Form1 form;
+        int roomId;
+        int userId;
 
         public TcpConnection(Form1 tmpform)
         {
@@ -30,6 +32,8 @@ namespace DesktopApp1
                 clientReceiveThread = new Thread(() => readMessage());
                 clientReceiveThread.IsBackground = true;
                 clientReceiveThread.Start();
+                roomId = 0;
+                userId = LoginDataReplay.Instance.getUserID();
             }
             catch (Exception e)
             {
@@ -70,8 +74,12 @@ namespace DesktopApp1
                             Array.Copy(bytes, 0, incommingData, 0, length);
                             // Convert byte array to string message. 						
                             string serverMessage = Encoding.ASCII.GetString(incommingData);
+                            Message Msg = JsonConvert.DeserializeObject<Message>(serverMessage);
                             Console.WriteLine(i + ".Message:" + "server message received as: " + serverMessage);
-                            form.AddChatTextBox(serverMessage);
+                            foreach (Data Msgs in Msg.data)
+                            {
+                                form.AddChatTextBox(LoginDataReplay.Instance.getUserName(Msgs.userID) + ": " + Msgs.message + Msgs.timestamp);
+                            }
                             Thread.Sleep(100);
                             i++;
                         }
@@ -86,13 +94,20 @@ namespace DesktopApp1
 
         public void SendChatMessage(string Msg)
         {
-            NetworkStream networkStream = client.GetStream();
             Message Message = new Message();
+            Message.type = 2;
+            Message.token = "256";
+            Data newData = new Data();
+            newData.message = Msg;
+            newData.roomID = roomId;                //elkell tárolni meyik  roomban vagy
+            newData.userID = userId;
+            newData.timestamp = DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss");
+            string jsonMessage = JsonConvert.SerializeObject(Message);
+            NetworkStream networkStream = client.GetStream();
             byte[] bytes = new byte[1024];
-            byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(Msg);
+            byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(jsonMessage);
             Console.WriteLine("Sending : " + Msg);
             networkStream.Write(bytesToSend, 0, bytesToSend.Length);
-
         }
 
         public void SendLoginMessage()

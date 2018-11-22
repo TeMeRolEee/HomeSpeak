@@ -26,14 +26,15 @@ namespace DesktopApp1
             LoginData.Instance.password = passwordBox.Text.ToString();
             LoginData.Instance.email = EmailBox.Text.ToString();
             Boolean validLoginData = LoginData.Instance.Login();
-            if (validLoginData == false)
+            this.Close();
+            /*if (validLoginData == false)
             {
                 MessageBox.Show("Invalid username or password");
             }
             else
             {
                 this.Close();
-            }
+            }*/
         }
 
         private void pictureBox7_Click(object sender, EventArgs e)
