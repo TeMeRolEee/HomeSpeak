@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             this.panel2 = new System.Windows.Forms.Panel();
+            this.EmailBox = new System.Windows.Forms.TextBox();
             this.passwordBox = new System.Windows.Forms.TextBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.UsernameBox = new System.Windows.Forms.TextBox();
@@ -41,7 +42,6 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.EmailBox = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.panel1.SuspendLayout();
@@ -69,6 +69,18 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(431, 337);
             this.panel2.TabIndex = 3;
+            // 
+            // EmailBox
+            // 
+            this.EmailBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.EmailBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.EmailBox.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.EmailBox.ForeColor = System.Drawing.SystemColors.Window;
+            this.EmailBox.Location = new System.Drawing.Point(132, 242);
+            this.EmailBox.Multiline = true;
+            this.EmailBox.Name = "EmailBox";
+            this.EmailBox.Size = new System.Drawing.Size(166, 24);
+            this.EmailBox.TabIndex = 9;
             // 
             // passwordBox
             // 
@@ -203,18 +215,6 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
-            // 
-            // EmailBox
-            // 
-            this.EmailBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.EmailBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.EmailBox.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.EmailBox.ForeColor = System.Drawing.SystemColors.Window;
-            this.EmailBox.Location = new System.Drawing.Point(132, 242);
-            this.EmailBox.Multiline = true;
-            this.EmailBox.Name = "EmailBox";
-            this.EmailBox.Size = new System.Drawing.Size(166, 24);
-            this.EmailBox.TabIndex = 9;
             // 
             // Form2
             // 

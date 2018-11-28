@@ -1,5 +1,4 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Net.Sockets;
 using System.Text;
@@ -35,15 +34,15 @@ public class LoginData
     {
         try
         {
+            IpconnectionData.Instance.client = new TcpClient(IpconnectionData.Instance.hostName, IpconnectionData.Instance.portNumber);
             string json = JsonConvert.SerializeObject(this);
-            TcpClient client = new TcpClient("127.0.0.1", 8085);
-            NetworkStream networkStream = client.GetStream();
+            IpconnectionData.Instance.NetworkStream = IpconnectionData.Instance.client.GetStream();
             byte[] bytes = new byte[1024];
             byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(json);
             Console.WriteLine("LoginMsg : " + json);
-            networkStream.Write(bytesToSend, 0, bytesToSend.Length);
+            IpconnectionData.Instance.NetworkStream.Write(bytesToSend, 0, bytesToSend.Length);
             LoginDataReplay Replay = null;
-            using (NetworkStream stream = client.GetStream())
+            using (NetworkStream stream = IpconnectionData.Instance.client.GetStream())
             {
                 int length;
                 // Read incomming stream into byte arrary. 					
@@ -59,15 +58,17 @@ public class LoginData
                     break;
                 }
             }
-            if (Replay.type == 0 && Replay.status == 0)
+            if (Replay != null && Replay.type == 0 && Replay.status == 0)
             {
-                client.Close();
+                
                 return false;
+
+
             }
             else
             {
                 Console.WriteLine("kilep a loginbol");
-                client.Close();
+                
                 return true;
             }
         }

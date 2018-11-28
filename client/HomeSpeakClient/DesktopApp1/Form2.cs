@@ -26,15 +26,15 @@ namespace DesktopApp1
             LoginData.Instance.password = passwordBox.Text.ToString();
             LoginData.Instance.email = EmailBox.Text.ToString();
             Boolean validLoginData = LoginData.Instance.Login();
-            this.Close();
-            /*if (validLoginData == false)
+            
+            if (validLoginData == false)
             {
                 MessageBox.Show("Invalid username or password");
             }
             else
             {
                 this.Close();
-            }*/
+            }
         }
 
         private void pictureBox7_Click(object sender, EventArgs e)
@@ -122,5 +122,26 @@ namespace DesktopApp1
             EmailBox.Text = "";
             EmailBox.ForeColor = Color.White;
         }
+        private void SendLoginEnter(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                LoginData.Instance.username = UsernameBox.Text.ToString();
+                LoginData.Instance.password = passwordBox.Text.ToString();
+                LoginData.Instance.email = EmailBox.Text.ToString();
+                Boolean validLoginData = LoginData.Instance.Login();
+
+                if (validLoginData == false)
+                {
+                    MessageBox.Show("Invalid username or password");
+                }
+                else
+                {
+                    this.Close();
+                }
+         
+            }
+        }
+
     }
 }

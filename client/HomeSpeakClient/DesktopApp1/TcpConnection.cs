@@ -10,25 +10,23 @@ namespace DesktopApp1
 {
     public class TcpConnection
     {
-        private int portNumber = 8085;
-        private string hostName = "127.0.0.1";
+        
         private TcpClient client;
         private NetworkStream networkStream;
-        public Boolean getMsg = false;
         private Thread clientReceiveThread;
         Form1 form;
-        int roomId;
-        int userId;
+        int roomId = 0;
+        int userId = 1;
 
         public TcpConnection(Form1 tmpform)
         {
             form = tmpform;
             try
             {
-                client = new TcpClient(hostName, portNumber);
+                client = IpconnectionData.Instance.client;
+                networkStream = IpconnectionData.Instance.NetworkStream;
                 Console.Write("Connected to server");
                 form.AddChatTextBox("Connected to server\n");
-                SendLoginMessage();
                 clientReceiveThread = new Thread(() => readMessage());
                 clientReceiveThread.IsBackground = true;
                 clientReceiveThread.Start();
@@ -113,10 +111,8 @@ namespace DesktopApp1
         public void SendLoginMessage()
         {
 
-            LoginData.Instance.type = 10;
-            LoginData.Instance.username = "randomnevufaszi";
-            LoginData.Instance.email = "randomfaszi@gmail.com";
-            LoginData.Instance.password = "ezajelszavamfaszi";
+            LoginData.Instance.type = 11;
+            
             string jsonMessage = JsonConvert.SerializeObject(LoginData.Instance);
             networkStream = client.GetStream();
             byte[] bytes = new byte[1024];

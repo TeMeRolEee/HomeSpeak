@@ -124,9 +124,6 @@ namespace DesktopApp1
             {
                 ChatTextBox.Text += SendTextBox.Text;
                 SendTextBox.Text = null;
-                //Thread SendMessage = new Thread(() => Tcpconnection.sendMessage());
-                //SendMessage.IsBackground = true;
-                //SendMessage.Start();
             }
         }
 
