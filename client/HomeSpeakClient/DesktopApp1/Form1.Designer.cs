@@ -30,9 +30,9 @@ namespace DesktopApp1
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Lobby");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Room1", 1, 2);
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Room2", 1, 2);
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Lobby");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Room1", 1, 2);
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Room2", 1, 2);
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
@@ -49,6 +49,12 @@ namespace DesktopApp1
             this.ChatTextBox = new ZBobb.AlphaBlendTextBox();
             this.SendTextBox = new System.Windows.Forms.TextBox();
             this.SendButton = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.setABackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setProfilePictureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -59,6 +65,7 @@ namespace DesktopApp1
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -164,22 +171,22 @@ namespace DesktopApp1
             this.RoomList.LineColor = System.Drawing.Color.White;
             this.RoomList.Location = new System.Drawing.Point(12, 85);
             this.RoomList.Name = "RoomList";
-            treeNode4.ImageIndex = 0;
-            treeNode4.Name = "Lobby";
-            treeNode4.SelectedImageKey = "(default)";
-            treeNode4.Text = "Lobby";
-            treeNode5.ImageIndex = 1;
-            treeNode5.Name = "Node9";
-            treeNode5.SelectedImageIndex = 2;
-            treeNode5.Text = "Room1";
-            treeNode6.ImageIndex = 1;
-            treeNode6.Name = "Node0";
-            treeNode6.SelectedImageIndex = 2;
-            treeNode6.Text = "Room2";
+            treeNode1.ImageIndex = 0;
+            treeNode1.Name = "Lobby";
+            treeNode1.SelectedImageKey = "(default)";
+            treeNode1.Text = "Lobby";
+            treeNode2.ImageIndex = 1;
+            treeNode2.Name = "Node9";
+            treeNode2.SelectedImageIndex = 2;
+            treeNode2.Text = "Room1";
+            treeNode3.ImageIndex = 1;
+            treeNode3.Name = "Node0";
+            treeNode3.SelectedImageIndex = 2;
+            treeNode3.Text = "Room2";
             this.RoomList.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.RoomList.SelectedImageIndex = 0;
             this.RoomList.Size = new System.Drawing.Size(169, 469);
             this.RoomList.TabIndex = 0;
@@ -203,6 +210,7 @@ namespace DesktopApp1
             this.panel2.Controls.Add(this.ChatTextBox);
             this.panel2.Controls.Add(this.SendTextBox);
             this.panel2.Controls.Add(this.SendButton);
+            this.panel2.Controls.Add(this.menuStrip1);
             this.panel2.Cursor = System.Windows.Forms.Cursors.Default;
             this.panel2.Location = new System.Drawing.Point(214, 64);
             this.panel2.Name = "panel2";
@@ -220,6 +228,7 @@ namespace DesktopApp1
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox6.TabIndex = 9;
             this.pictureBox6.TabStop = false;
+            this.pictureBox6.Click += new System.EventHandler(this.pictureBox6_Click);
             // 
             // pictureBox5
             // 
@@ -231,6 +240,7 @@ namespace DesktopApp1
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox5.TabIndex = 8;
             this.pictureBox5.TabStop = false;
+            this.pictureBox5.Click += new System.EventHandler(this.pictureBox5_Click);
             // 
             // ChatTextBox
             // 
@@ -277,6 +287,52 @@ namespace DesktopApp1
             this.SendButton.UseVisualStyleBackColor = true;
             this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setABackgroundToolStripMenuItem,
+            this.setProfilePictureToolStripMenuItem,
+            this.aboutToolStripMenuItem,
+            this.closeToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(836, 24);
+            this.menuStrip1.TabIndex = 10;
+            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.Visible = false;
+            // 
+            // setABackgroundToolStripMenuItem
+            // 
+            this.setABackgroundToolStripMenuItem.Name = "setABackgroundToolStripMenuItem";
+            this.setABackgroundToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
+            this.setABackgroundToolStripMenuItem.Text = "Set a background";
+            this.setABackgroundToolStripMenuItem.Click += new System.EventHandler(this.setABackgroundToolStripMenuItem_Click);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // setProfilePictureToolStripMenuItem
+            // 
+            this.setProfilePictureToolStripMenuItem.Name = "setProfilePictureToolStripMenuItem";
+            this.setProfilePictureToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
+            this.setProfilePictureToolStripMenuItem.Text = "Set profile picture";
+            this.setProfilePictureToolStripMenuItem.Click += new System.EventHandler(this.setProfilePictureToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -286,6 +342,7 @@ namespace DesktopApp1
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -302,6 +359,8 @@ namespace DesktopApp1
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -324,6 +383,12 @@ namespace DesktopApp1
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem setABackgroundToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setProfilePictureToolStripMenuItem;
     }
 }
 

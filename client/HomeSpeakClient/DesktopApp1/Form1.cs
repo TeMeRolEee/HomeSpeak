@@ -49,7 +49,7 @@ namespace DesktopApp1
         }
 
         private void Form1_Load(object sender, System.EventArgs e)
-        {
+        {            
             Console.Write("its work");
             TreeNode treeNode = new TreeNode("Windows");
             RoomList.Nodes.Add(treeNode);
@@ -145,6 +145,79 @@ namespace DesktopApp1
         {
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012,0);
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            openFile(0);
+        }
+
+        private void openFile(int flag)
+        {
+            string sharedFileName;
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            if (flag == 0)
+            {
+                openFileDialog1.ShowDialog();
+            }           
+            openFileDialog1.InitialDirectory = @"C:\";
+            openFileDialog1.Title = "Browse Files";
+            //openFileDialog1.DefaultExt = "pdf";
+            openFileDialog1.Filter = "All files (*.*)|*.*";
+            openFileDialog1.CheckFileExists = true;
+            openFileDialog1.CheckPathExists = true;
+            sharedFileName = openFileDialog1.FileName;            
+            Console.WriteLine("{0} meg lett nyitva feltoltesre!", sharedFileName); /* debug */                     
+            if (flag == 1)
+            {
+                if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    string fileToOpen = openFileDialog1.FileName;
+                    System.IO.FileInfo File = new System.IO.FileInfo(openFileDialog1.FileName);
+                    panel2.BackgroundImage = Image.FromFile(openFileDialog1.FileName);
+                }
+            }
+            if (flag == 2)
+            {
+                if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    string fileToOpen = openFileDialog1.FileName;
+                    System.IO.FileInfo File = new System.IO.FileInfo(openFileDialog1.FileName);
+                    pictureBox7.Image = Image.FromFile(openFileDialog1.FileName);
+                }
+            }
+        }
+
+        private void pictureBox6_Click(object sender, EventArgs e)
+        {
+            if (menuStrip1.Visible == true)
+            {
+                menuStrip1.Visible = false;
+            }
+            else
+            {
+                menuStrip1.Visible = true;
+            }
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            menuStrip1.Visible = false;
+        }
+
+        private void setABackgroundToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFile(1);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/TeMeRolEee/HomeSpeak");
+        }
+
+        private void setProfilePictureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFile(2);
         }
     }
 }
