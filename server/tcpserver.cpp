@@ -6,11 +6,11 @@
 TcpServer::TcpServer(QObject *parent) :
     QObject(parent) {
     server = new QTcpServer(this);
-    clientVector = new QVector<QHostAddress*>();
-
     connect(server, &QTcpServer::newConnection, this, &TcpServer::newConnection_slot);
 
-    if (!server->listen(QHostAddress::AnyIPv4, 8085)) {
+    clients = new QMap<int, TcpServerThread*>();
+
+    if (!server->listen(QHostAddress::AnyIPv4, 8086)) {
         qDebug() << "Server could not start!";
     } else {
         qDebug() << "Server started successfully!";
@@ -19,23 +19,18 @@ TcpServer::TcpServer(QObject *parent) :
 
 void TcpServer::newConnection_slot() {
     QTcpSocket *socket = server->nextPendingConnection();
-    QByteArray data;
 
-    while (!data.contains("\n")) {
-        socket->waitForReadyRead();
-        data += socket->readAll();
-    }
+    auto *thread = new TcpServerThread();
 
-    storeIp(socket->peerAddress());
+    clients->insert(clientCounter++, thread);
 
-    emit newDataRecieved_signal(data);
+    connect(thread, &TcpServerThread::messageRecieved_signal, this, &TcpServer::newDataRecieved_signal);
 
-    socket->write(data);
-    socket->flush();
+    thread->setSocket(server->nextPendingConnection());
 
-    socket->waitForBytesWritten(3000);
+    thread->run();
 
-    socket->close();
+    //socket->close();
 }
 
 TcpServer::~TcpServer() {
@@ -56,4 +51,12 @@ bool TcpServer::checkIpExists(const QHostAddress &ipAddress) {
         }
     }*/
     return false;
+}
+
+void TcpServer::getMessageFromThread_slot(const QByteArray data) {
+    emit newDataRecieved_signal(data);
+}
+
+void TcpServer::sendMessage_slot(const QJsonObject &message) {
+
 }

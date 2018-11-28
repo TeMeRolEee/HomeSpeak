@@ -60,15 +60,19 @@ void HandleCommunication::processMessage_slot(const QJsonObject &messageData) {
 }
 
 void HandleCommunication::handleConnectionRequest(const QJsonObject &messageData) {
-	//TODO finish function!
+    if (dbManager->checkUserEmail(messageData.value("email").toString()) &&
+    dbManager->checkPassword(messageData.value("email").toString(), messageData.value("password").toString())) {
+
+    }
 }
+
 
 void HandleCommunication::handleDisconnection(const QJsonObject &messageData) {
 	//TODO finish function!
 }
 
 void HandleCommunication::handleTextMessage(const QJsonObject &messageData) {
-    
+
 }
 
 void HandleCommunication::handleSwitchRoom(const QJsonObject &messageData) {

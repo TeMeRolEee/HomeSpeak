@@ -83,3 +83,19 @@ bool DBManager::checkUserNickName(const QString &nickName) {
 
     return false;
 }
+
+bool DBManager::checkPassword(const QString &email, const QString &password) {
+    if (!password.isEmpty()) {
+        QSqlQuery qSqlQuery;
+        qSqlQuery.prepare("SELECT password FROM users WHERE email = (:email)");
+        qSqlQuery.bindValue(":email", email);
+
+        if (qSqlQuery.exec() && qSqlQuery.next()) {
+            qDebug() << qSqlQuery.record().value("password");
+        }
+
+        //qSqlQuery.
+    }
+
+
+}

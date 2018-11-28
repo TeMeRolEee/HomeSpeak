@@ -18,6 +18,8 @@ public:
 
     bool checkUserNickName(const QString &nickName);
 
+    bool checkPassword(const QString &email, const QString &password);
+
     int getUsersRoomId(const int &id);
 
     int registerUser(const QString &email, const QString &password, const QString &nickName);
