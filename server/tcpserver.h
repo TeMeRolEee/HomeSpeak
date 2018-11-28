@@ -15,14 +15,14 @@ public:
     ~TcpServer();
 
 signals:
-	void newDataRecieved_signal(QByteArray data);
+	void newDataRecieved_signal(QByteArray data, int id);
 
 public slots:
     void newConnection_slot();
 
-    void sendMessage_slot(const QJsonObject &message);
+    void sendMessage_slot(const QJsonObject &message, int id);
 
-    void getMessageFromThread_slot(QByteArray data);
+    void getMessageFromThread_slot(QByteArray data, int id);
 
 private:
     QTcpServer *server = nullptr;
@@ -32,5 +32,6 @@ private:
 
     void storeIp(const QHostAddress &ipAddress);
 
-    bool checkIpExists(const QHostAddress &ipAddress);
+    int checkIpExists(const QHostAddress &ipAddress);
+
 };

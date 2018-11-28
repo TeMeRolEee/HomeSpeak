@@ -1,8 +1,14 @@
 #include <QtCore/QDataStream>
 #include <QtCore/QJsonDocument>
+#include <QHostAddress>
 #include "tcpserverthread.h"
 
 
+
+TcpServerThread::TcpServerThread(QTcpSocket *socket, int id) : socket(socket),
+    id(id) {
+
+}
 
 void TcpServerThread::sendMessage_slot(const QJsonObject &messageData) {
     QByteArray block;
@@ -18,37 +24,71 @@ void TcpServerThread::sendMessage_slot(const QJsonObject &messageData) {
 }
 
 void TcpServerThread::run() {
-    socket = new QTcpSocket();
+    address = socket->peerAddress();
+    QByteArray data;
 
-    qDebug() << "New user";
-    while (socket->isOpen()) {
-        QByteArray data;
+    qDebug() << "New user" << QThread::currentThreadId() << id;
 
-        socket->waitForReadyRead();
+    qDebug() <<  socket->peerAddress().toString() << socket->isOpen();
 
-        qDebug() << socket->bytesAvailable();
+    qDebug() << socket->bytesAvailable();
 
-        while (data.size() < socket->bytesAvailable()) {
+    socket->waitForBytesWritten();
+    socket->waitForReadyRead();
 
-            data += socket->readAll();
-            qDebug() << data;
-        }
+    while (data.size() < socket->bytesAvailable()) {
 
-        qDebug() << "Total message" << data;
-
-        emit messageRecieved_signal(data);
-
-        socket->write(data);
-
-        socket->flush();
-
-        socket->waitForBytesWritten();
+        data += socket->readAll();
+        qDebug() << data;
     }
 
+    qDebug() << "Total message" << data;
 
-    //socket->waitForDisconnected();
+    socket->write(data);
+
+    emit messageRecieved_signal(data, id);
+
+    //socket->flush();
+/*
+    while (socket->isOpen()) {
+        qDebug() << "doing something";
+        //socket->waitForBytesWritten();
+        qDebug() << "doing something2";
+        //socket->waitForReadyRead();
+        qDebug() << "doing something3";
+        data.clear();
+
+        data += socket->readAll();
+        qDebug() << "doing something4";
+        emit messageRecieved_signal(data, id);
+        if (!data.isEmpty()) {
+            while (!socket->isWritable()) {
+                qDebug() << "waiting...";
+            }
+            socket->write(data);
+            socket->waitForBytesWritten();
+            qDebug() << "Total message" << data;
+            //socket->close();
+        }
+    }*/
+
+
+
+
 }
 
-void TcpServerThread::setSocket(QTcpSocket *socket) {
+TcpServerThread::~TcpServerThread() {
+    delete socket;
+}
+
+void TcpServerThread::setNewSocket(QTcpSocket *socket) {
     socket = socket;
+}
+
+int TcpServerThread::getId() {
+    return id;
+}
+
+QHostAddress TcpServerThread::getIpAddress() {
+    return address;
 }

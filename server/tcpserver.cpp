@@ -5,6 +5,7 @@
 
 TcpServer::TcpServer(QObject *parent) :
     QObject(parent) {
+    qDebug() << QThread::currentThreadId();
     server = new QTcpServer(this);
     connect(server, &QTcpServer::newConnection, this, &TcpServer::newConnection_slot);
 
@@ -20,15 +21,31 @@ TcpServer::TcpServer(QObject *parent) :
 void TcpServer::newConnection_slot() {
     QTcpSocket *socket = server->nextPendingConnection();
 
-    auto *thread = new TcpServerThread();
+    int id = checkIpExists(socket->peerAddress());
+    if (id != -1) {
+        //clients->value(id)->wait();
+        //clients->value(id)->quit();
 
-    clients->insert(clientCounter++, thread);
+        auto *thread = new TcpServerThread(socket, id);
 
-    connect(thread, &TcpServerThread::messageRecieved_signal, this, &TcpServer::newDataRecieved_signal);
+        delete clients->take(id);
 
-    thread->setSocket(server->nextPendingConnection());
+        clients->insert(id, thread);
 
-    thread->run();
+        clients->value(id)->run();
+        //clients->value(id)->start();
+    } else {
+        auto *thread = new TcpServerThread(socket, clientCounter++);
+
+        clients->insert(clientCounter, thread);
+
+        connect(thread, &TcpServerThread::messageRecieved_signal, this, &TcpServer::newDataRecieved_signal);
+
+        //thread->start();
+        thread->run();
+    }
+
+    qDebug() << "rungdsgsd";
 
     //socket->close();
 }
@@ -44,19 +61,19 @@ void TcpServer::storeIp(const QHostAddress &ipAddress) {
     }
 }
 
-bool TcpServer::checkIpExists(const QHostAddress &ipAddress) {
-    /*for (auto i : *clientVector) {
-        if (i->toIPv4Address() == ipAddress.toIPv4Address()) {
-            return true;
+int TcpServer::checkIpExists(const QHostAddress &ipAddress) {
+    for (auto thread : clients->keys()) {
+        if (clients->value(thread)->getIpAddress() == ipAddress) {
+            return clients->value(thread)->getId();
         }
-    }*/
-    return false;
+    }
+    return -1;
 }
 
-void TcpServer::getMessageFromThread_slot(const QByteArray data) {
-    emit newDataRecieved_signal(data);
+void TcpServer::getMessageFromThread_slot(const QByteArray data, int id) {
+    emit newDataRecieved_signal(data, id);
 }
 
-void TcpServer::sendMessage_slot(const QJsonObject &message) {
+void TcpServer::sendMessage_slot(const QJsonObject &message, int id) {
 
 }

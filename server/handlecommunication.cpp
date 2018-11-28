@@ -62,7 +62,26 @@ void HandleCommunication::processMessage_slot(const QJsonObject &messageData) {
 void HandleCommunication::handleConnectionRequest(const QJsonObject &messageData) {
     if (dbManager->checkUserEmail(messageData.value("email").toString()) &&
     dbManager->checkPassword(messageData.value("email").toString(), messageData.value("password").toString())) {
+        QJsonObject response;
+        response.insert("type", 0);
+        response.insert("status", 1);
 
+        QJsonArray dataArray;
+
+        QJsonObject tokenObject;
+        tokenObject.insert("token", "qwertzuiopasdfghjkl");
+
+        dataArray.append(tokenObject);
+
+        QJsonArray rooms;
+
+        QJsonObject room1;
+        room1.insert("roomID", 0);
+        QJsonArray users;
+
+        //dbManager->
+
+        response.insert("data", );
     }
 }
 
