@@ -22,9 +22,11 @@ public:
 
     int registerUser(const QString &email, const QString &password, const QString &nickName);
 
+    QJsonArray getOnlineUsers();
+
 private:
     QString dataBaseFilePath;
-    QSqlDatabase qSqlDatabase;
+    QSqlDatabase database;
 };
 
 
