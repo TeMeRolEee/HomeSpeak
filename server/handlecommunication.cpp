@@ -10,6 +10,7 @@
 HandleCommunication::HandleCommunication() {
 	jsonParser = new JsonParser();
 	dbManager = new DBManager("server.sqlite");
+	dbManager->initDataBase();
 
 	connect(this, &HandleCommunication::parsingDone_signal, this, &HandleCommunication::processMessage_slot);
 }
@@ -81,7 +82,7 @@ void HandleCommunication::handleConnectionRequest(const QJsonObject &messageData
 
         //dbManager->
 
-        response.insert("data", );
+        //response.insert("data", );
     }
 }
 

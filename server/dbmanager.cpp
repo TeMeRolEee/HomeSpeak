@@ -8,17 +8,19 @@ DBManager::DBManager(const QString &path) : dataBaseFilePath(path) {
 bool DBManager::initDataBase() {
     qSqlDatabase = QSqlDatabase::addDatabase("QSQLITE");
     qSqlDatabase.setDatabaseName(dataBaseFilePath);
+	QSqlQuery createUsersTableQuery;
+	QString usersTableQueryText = "CREATE TABLE `users` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, `name` TEXT NOT NULL, `email` TEXT NOT NULL UNIQUE, `password` TEXT NOT NULL UNIQUE )";
 
-    return qSqlDatabase.open();
-}
+	QSqlQuery createOnlineUsersQuery;
+	QString onlineTableQueryText = "CREATE TABLE `onlineUsers` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `userID` INTEGER NOT NULL UNIQUE, `roomID` INTEGER NOT NULL )";
 
-bool DBManager::addUser(const QVector<QString> &data) {
+	QSqlQuery createRoomsUsersQuery;
+	QString roomsTableQueryText = "CREATE TABLE `rooms` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `roomName` TEXT NOT NULL )";
 
-    QSqlQuery qSqlQuery;
-    qSqlQuery.prepare("INSERT INTO users id VALUES (:id)");
-    qSqlQuery.bindValue(":id", data.at(0));
-
-    return qSqlQuery.exec() && qSqlQuery.next();
+	return qSqlDatabase.open() &&
+			createUsersTableQuery.exec(usersTableQueryText) &&
+			createOnlineUsersQuery.exec(onlineTableQueryText) &&
+			createRoomsUsersQuery.exec(roomsTableQueryText);
 }
 
 bool DBManager::checkUserIDExists(const QString &id) {

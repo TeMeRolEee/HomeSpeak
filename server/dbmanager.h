@@ -10,8 +10,6 @@ public:
 
     bool initDataBase();
 
-    bool addUser(const QVector<QString> &data);
-
     bool checkUserIDExists(const QString &id);
 
     bool checkUserEmail(const QString &email);
