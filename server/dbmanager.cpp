@@ -32,8 +32,9 @@ bool DBManager::checkUserIDExists(const QString &id) {
 			qSqlQuery.prepare("SELECT id FROM users WHERE id = (:id)");
 			qSqlQuery.bindValue(":id", id);
 
+			bool res = qSqlQuery.exec() && qSqlQuery.next();
 			database.close();
-			return qSqlQuery.exec() && qSqlQuery.next();
+			return res;
 		}
 
 		database.close();
@@ -44,16 +45,25 @@ bool DBManager::checkUserIDExists(const QString &id) {
 int DBManager::getUsersRoomId(const int &id) {
 
 	if (database.open()) {
-//TODO FINISH UP THIS FUNCTION!
 		if (id >= 0) {
 			QSqlQuery qSqlQuery;
-			qSqlQuery.prepare("SELECT roomID FROM ");
+			qSqlQuery.prepare("SELECT roomID FROM onlineUsers WHERE userID = (:id)");
+            qSqlQuery.bindValue(":id", id);
 
-			return 0;
+            int res = -1;
+
+            if (qSqlQuery.exec() && qSqlQuery.next()) {
+                res = qSqlQuery.value(qSqlQuery.record().indexOf("roomID")).toInt();
+            }
+
+            database.close();
+            return res;
 		}
 
 		database.close();
 	}
+
+	return -1;
 }
 
 int DBManager::registerUser(const QString &email, const QString &password, const QString &nickName) {
@@ -67,7 +77,9 @@ int DBManager::registerUser(const QString &email, const QString &password, const
 				qSqlQuery.bindValue(":email", email);
 				qSqlQuery.bindValue(":password", password);
 
-				return qSqlQuery.exec() && qSqlQuery.next();
+                int res = qSqlQuery.exec() && qSqlQuery.next();
+                database.close();
+                return res;
 			}
 		}
 		database.close();
@@ -83,8 +95,9 @@ bool DBManager::checkUserEmail(const QString &email) {
 			qSqlQuery.prepare("SELECT id FROM users WHERE email = (:email)");
 			qSqlQuery.bindValue(":email", email);
 
-			database.close();
-			return qSqlQuery.exec() && qSqlQuery.next();
+            bool res = qSqlQuery.exec() && qSqlQuery.next();
+            database.close();
+            return res;
 		}
 		database.close();
 	}
@@ -100,7 +113,9 @@ bool DBManager::checkUserNickName(const QString &nickName) {
 			qSqlQuery.prepare("SELECT id FROM users WHERE name = (:nickname)");
 			qSqlQuery.bindValue(":nickname", nickName);
 
-			return qSqlQuery.exec() && qSqlQuery.next();
+            bool res = qSqlQuery.exec() && qSqlQuery.next();
+            database.close();
+            return res;
 		}
 		database.close();
 	}
@@ -109,20 +124,25 @@ bool DBManager::checkUserNickName(const QString &nickName) {
 }
 
 bool DBManager::checkPassword(const QString &email, const QString &password) {
+    bool passwordOK = false;
+
 	if (database.open()) {
-		if (!password.isEmpty()) {
-			QSqlQuery qSqlQuery;
-			qSqlQuery.prepare("SELECT password FROM users WHERE email = (:email)");
-			qSqlQuery.bindValue(":email", email);
+        if (!password.isEmpty()) {
+            QSqlQuery qSqlQuery;
+            qSqlQuery.prepare("SELECT password FROM users WHERE email = (:email)");
+            qSqlQuery.bindValue(":email", email);
 
-			if (qSqlQuery.exec() && qSqlQuery.next()) {
-				qDebug() << qSqlQuery.record().value("password");
-			}
+            if (qSqlQuery.exec() && qSqlQuery.next()) {
+                if (qSqlQuery.value(qSqlQuery.record().indexOf("password")).toString() == password) {
+                    passwordOK =  true;
+                }
+            }
+        }
 
-			//qSqlQuery.
-		}
 		database.close();
 	}
+
+	return passwordOK;
 }
 
 QJsonArray DBManager::getOnlineUsers() {
@@ -141,6 +161,8 @@ QJsonArray DBManager::getOnlineUsers() {
 			tempObject.insert("roomID", roomID);
 			users.push_back(tempObject);
 		}
+
+		database.close();
 		return users;
 	}
 
