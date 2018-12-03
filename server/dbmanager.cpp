@@ -169,4 +169,35 @@ QJsonArray DBManager::getOnlineUsers() {
 	return QJsonArray();
 }
 
+int DBManager::getUserID(const QString &email) {
+	QSqlQuery qSqlQuery;
+	qSqlQuery.prepare("SELECT password FROM users WHERE email = (:email)");
+	qSqlQuery.bindValue(":email", email);
+
+	if (database.open() && qSqlQuery.exec()) {
+		int id = qSqlQuery.value("id").toInt();
+		database.close();
+		return id;
+	}
+
+	return -1;
+}
+
+bool DBManager::addToOnlineUsers(int userID, int roomID) {
+	if (database.open()) {
+		if (userID >= 0) {
+			QSqlQuery qSqlQuery;
+
+			qSqlQuery.prepare("INSERT INTO onlineUsers (userID, roomID) VALUES (:userID), (:roomID)");
+			qSqlQuery.bindValue(":userID", userID);
+			qSqlQuery.bindValue(":roomID", roomID);
+
+			database.close();
+			return qSqlQuery.exec() && qSqlQuery.next();
+		}
+		database.close();
+	}
+	return false;
+}
+
 

@@ -44,10 +44,11 @@ void TcpServerThread::run() {
 
     qDebug() << "Total message" << data;
 
-    socket->write(data);
+    //socket->write(data);
 
     emit messageRecieved_signal(data, id);
 
+    this->exec();
     //socket->flush();
 /*
     while (socket->isOpen()) {

@@ -17,6 +17,8 @@ public:
 signals:
 	void newDataRecieved_signal(QByteArray data, int id);
 
+	void sendMessage_signal(const QJsonObject &messageData);
+
 public slots:
     void newConnection_slot();
 

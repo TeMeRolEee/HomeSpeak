@@ -24,6 +24,10 @@ public:
 
     QJsonArray getOnlineUsers();
 
+    int getUserID(const QString &email);
+
+    bool addToOnlineUsers(int userID, int roomID);
+
 private:
     QString dataBaseFilePath;
     QSqlDatabase database;

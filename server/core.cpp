@@ -11,6 +11,7 @@ Core::Core() {
 	connect(communicationHandler, &HandleCommunication::parsingDone_signal, communicationHandler,
 			&HandleCommunication::processMessage_slot);
 	connect(communicationHandler, &HandleCommunication::processMessageDone_signal, this, &Core::processMessageAck_slot);
+	connect(communicationHandler, &HandleCommunication::sendResponse, tcpServer, &TcpServer::sendMessage_slot);
 }
 
 Core::~Core() {

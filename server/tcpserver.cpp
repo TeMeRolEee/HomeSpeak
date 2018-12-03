@@ -39,7 +39,9 @@ void TcpServer::newConnection_slot() {
 
         clients->insert(clientCounter, thread);
 
-        connect(thread, &TcpServerThread::messageRecieved_signal, this, &TcpServer::newDataRecieved_signal);
+        connect(thread, &TcpServerThread::messageRecieved_signal, this, &TcpServer::getMessageFromThread_slot);
+        connect(thread, &TcpServerThread::sendMessage_signal, thread, &TcpServerThread::sendMessage_slot);
+        connect(this, &TcpServer::sendMessage_signal, thread, &TcpServerThread::sendMessage_slot);
 
         //thread->start();
         thread->run();
@@ -75,5 +77,5 @@ void TcpServer::getMessageFromThread_slot(const QByteArray data, int id) {
 }
 
 void TcpServer::sendMessage_slot(const QJsonObject &message, int id) {
-
+    emit clients->value(id)->sendMessage_slot(message);
 }

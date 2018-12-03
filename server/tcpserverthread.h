@@ -33,6 +33,8 @@ public slots:
 signals:
     void messageRecieved_signal(QByteArray data, int id);
 
+    void sendMessage_signal(const QJsonObject &messageData);
+
     void clientDisconnected_signal();
 };
 

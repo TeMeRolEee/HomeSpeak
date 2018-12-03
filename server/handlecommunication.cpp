@@ -20,47 +20,47 @@ HandleCommunication::~HandleCommunication() {
 	delete dbManager;
 }
 
-void HandleCommunication::parseJson_slot(const QByteArray &messageData) {
-	emit parsingDone_signal(jsonParser->parseJson(messageData));
+void HandleCommunication::parseJson_slot(const QByteArray &messageData, int user) {
+	emit parsingDone_signal(jsonParser->parseJson(messageData), user);
 }
 
-void HandleCommunication::processMessage_slot(const QJsonObject &messageData) {
+void HandleCommunication::processMessage_slot(const QJsonObject &messageData, int user) {
 	switch (messageData.value("type").toInt()) {
 		case static_cast<int>(MessageTypes::CONNECTION_REQUEST):
-			handleConnectionRequest(messageData);
+			handleConnectionRequest(messageData, user);
 			break;
 		case static_cast<int>(MessageTypes::DISCONNECT):
-			handleDisconnection(messageData);
+			handleDisconnection(messageData, user);
 			break;
 		case static_cast<int>(MessageTypes::TEXT_MESSAGE):
-			handleTextMessage(messageData);
+			handleTextMessage(messageData, user);
 			break;
 		case static_cast<int>(MessageTypes::VOICE_MESSAGE):
 			break;
 		case static_cast<int>(MessageTypes::SWITCH_ROOM):
-			handleSwitchRoom(messageData);
+			handleSwitchRoom(messageData, user);
 			break;
 		case static_cast<int>(MessageTypes::MIC_MUTE_NOTIFICATION):
-			handleMicMuteNotification(messageData);
+			handleMicMuteNotification(messageData, user);
 			break;
 		case static_cast<int>(MessageTypes::MIC_UNMUTE_NOTIFICATION):
-			handleMicUnMuteNotification(messageData);
+			handleMicUnMuteNotification(messageData, user);
 			break;
 		case static_cast<int>(MessageTypes::SPEAKER_MUTE_NOTIFICATION):
-			handleSpeakerMuteNotification(messageData);
+			handleSpeakerMuteNotification(messageData, user);
 			break;
 		case static_cast<int>(MessageTypes::SPEAKER_UNMUTE_NOTIFICATION):
-			handleSpeakerUnMuteNotification(messageData);
+			handleSpeakerUnMuteNotification(messageData, user);
 			break;
 		case static_cast<int>(MessageTypes::REGISTRATION_REQUEST):
-			handleRegistrationRequest(messageData);
+			handleRegistrationRequest(messageData, user);
 			break;
 		default:
 			break;
 	}
 }
 
-void HandleCommunication::handleConnectionRequest(const QJsonObject &messageData) {
+void HandleCommunication::handleConnectionRequest(const QJsonObject &messageData, int user) {
     if (dbManager->checkUserEmail(messageData.value("email").toString()) &&
     dbManager->checkPassword(messageData.value("email").toString(), messageData.value("password").toString())) {
         QJsonObject response;
@@ -70,53 +70,65 @@ void HandleCommunication::handleConnectionRequest(const QJsonObject &messageData
         QJsonArray dataArray;
 
         QJsonObject tokenObject;
-        tokenObject.insert("token", "qwertzuiopasdfghjkl");
+
+		QString id(dbManager->getUserID(messageData.value("email").toString()));
+
+        QString token = QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Sha3_256);
+
+        tokenObject.insert("token", token);
 
         dataArray.append(tokenObject);
 
         QJsonArray rooms;
 
-        QJsonObject room1;
-        room1.insert("roomID", 0);
-        QJsonArray users;
+        QJsonObject room0;
 
-        //dbManager->
+        room0.insert("roomID", 0);
 
+        QJsonArray users = dbManager->getOnlineUsers();
+
+        room0.insert("users", users);
+
+        rooms.append(room0);
+
+        dbManager->addToOnlineUsers(id.toInt(), 0);
+
+        emit sendResponse(response, user);
         //response.insert("data", );
     }
 }
 
 
-void HandleCommunication::handleDisconnection(const QJsonObject &messageData) {
+void HandleCommunication::handleDisconnection(const QJsonObject &messageData, int user) {
 	//TODO finish function!
 }
 
-void HandleCommunication::handleTextMessage(const QJsonObject &messageData) {
+void HandleCommunication::handleTextMessage(const QJsonObject &messageData, int user) {
 
 }
 
-void HandleCommunication::handleSwitchRoom(const QJsonObject &messageData) {
+void HandleCommunication::handleSwitchRoom(const QJsonObject &messageData, int user) {
 
 	//TODO finish function!
 }
 
-void HandleCommunication::handleMicMuteNotification(const QJsonObject &messageData) {
+void HandleCommunication::handleMicMuteNotification(const QJsonObject &messageData, int user) {
 	//TODO finish function!
 }
 
-void HandleCommunication::handleMicUnMuteNotification(const QJsonObject &messageData) {
+void HandleCommunication::handleMicUnMuteNotification(const QJsonObject &messageData, int user) {
 	//TODO finish function!
 }
 
-void HandleCommunication::handleSpeakerMuteNotification(const QJsonObject &messageData) {
+void HandleCommunication::handleSpeakerMuteNotification(const QJsonObject &messageData, int user) {
 	//TODO finish function!
 }
 
-void HandleCommunication::handleSpeakerUnMuteNotification(const QJsonObject &messageData) {
+void HandleCommunication::handleSpeakerUnMuteNotification(const QJsonObject &messageData, int user) {
 	//TODO finish function!
 }
 
-void HandleCommunication::handleRegistrationRequest(const QJsonObject &messageData) {
+void HandleCommunication::handleRegistrationRequest(const QJsonObject &messageData, int user) {
 	if (!messageData.empty()) {
 		QString nickname, email, password;
 
