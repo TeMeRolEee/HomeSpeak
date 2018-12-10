@@ -28,6 +28,8 @@ public:
 
     bool addToOnlineUsers(int userID, int roomID);
 
+    bool removeFromOnlineUsers(int userID, int roomID);
+
 private:
     QString dataBaseFilePath;
     QSqlDatabase database;

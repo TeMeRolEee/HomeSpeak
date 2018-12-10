@@ -10,7 +10,7 @@
 int main(int argc, char *argv[]) {
     QCoreApplication app(argc, argv);
     QCoreApplication::setApplicationName("HomeSpeak server");
-    QCoreApplication::setApplicationVersion("0.1 alpha");
+    QCoreApplication::setApplicationVersion("0.3 alpha");
 
     QCommandLineParser parser;
     parser.setApplicationDescription("HomeSpeak server program");

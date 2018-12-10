@@ -66,7 +66,6 @@ void HandleCommunication::handleConnectionRequest(const QJsonObject &messageData
         QJsonObject response;
         response.insert("type", 0);
         response.insert("status", 1);
-
         QJsonArray dataArray;
 
         QJsonObject tokenObject;
@@ -93,8 +92,7 @@ void HandleCommunication::handleConnectionRequest(const QJsonObject &messageData
 
         dbManager->addToOnlineUsers(id.toInt(), 0);
 
-        emit sendResponse(response, user);
-        //response.insert("data", );
+        emit sendResponse_signal(response, user);
     }
 }
 
@@ -104,7 +102,7 @@ void HandleCommunication::handleDisconnection(const QJsonObject &messageData, in
 }
 
 void HandleCommunication::handleTextMessage(const QJsonObject &messageData, int user) {
-
+    emit responseMessageReady_signal(messageData, user);
 }
 
 void HandleCommunication::handleSwitchRoom(const QJsonObject &messageData, int user) {

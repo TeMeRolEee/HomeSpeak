@@ -6,15 +6,16 @@ DBManager::DBManager(const QString &path) : dataBaseFilePath(path) {
 }
 
 bool DBManager::initDataBase() {
-    database = QSqlDatabase::addDatabase("QSQLITE");
+    QSqlDatabase::addDatabase("QSQLITE");
+
     database.setDatabaseName(dataBaseFilePath);
 
-	QSqlQuery createUsersTableQuery("CREATE TABLE `users` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, `name` TEXT NOT NULL, `email` TEXT NOT NULL UNIQUE, `password` TEXT NOT NULL UNIQUE )");
+    QSqlQuery createUsersTableQuery("CREATE TABLE `users` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, `name` TEXT NOT NULL, `email` TEXT NOT NULL UNIQUE, `password` TEXT NOT NULL UNIQUE )");
 
 	QSqlQuery createOnlineUsersQuery("CREATE TABLE `onlineUsers` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `userID` INTEGER NOT NULL UNIQUE, `roomID` INTEGER NOT NULL )");
 
 	QSqlQuery createRoomsUsersQuery("CREATE TABLE `rooms` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `roomName` TEXT NOT NULL )");
-
+    qDebug() << "asd";
 	if (database.open() &&
 			createUsersTableQuery.exec() &&
 			createOnlineUsersQuery.exec() &&
@@ -192,12 +193,31 @@ bool DBManager::addToOnlineUsers(int userID, int roomID) {
 			qSqlQuery.bindValue(":userID", userID);
 			qSqlQuery.bindValue(":roomID", roomID);
 
+			bool execValue = qSqlQuery.exec() && qSqlQuery.next();
 			database.close();
-			return qSqlQuery.exec() && qSqlQuery.next();
+			return execValue;
 		}
 		database.close();
 	}
 	return false;
+}
+
+bool DBManager::removeFromOnlineUsers(int userID, int roomID) {
+    if (database.open()) {
+        if (userID >= 0) {
+            QSqlQuery qSqlQuery;
+
+            qSqlQuery.prepare("DELETE FROM onlineUsers (userID, roomID) VALUES (:userID), (:roomID)");
+            qSqlQuery.bindValue(":userID", userID);
+            qSqlQuery.bindValue(":roomID", roomID);
+
+            bool execValue = qSqlQuery.exec() && qSqlQuery.next();
+            database.close();
+            return execValue;
+        }
+        database.close();
+    }
+    return false;
 }
 
 

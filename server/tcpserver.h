@@ -24,6 +24,8 @@ public slots:
 
     void sendMessage_slot(const QJsonObject &message, int id);
 
+    void sendMessageToUsers_slot(const QJsonObject &message, int id);
+
     void getMessageFromThread_slot(QByteArray data, int id);
 
 private:

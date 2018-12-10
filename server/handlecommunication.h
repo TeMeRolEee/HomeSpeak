@@ -40,12 +40,16 @@ public slots:
 
 	void processMessage_slot(const QJsonObject &messageData, int user);
 
-	void sendResponse(const QJsonObject &messageData, int user);
+
 
 signals:
 
 	void parsingDone_signal(const QJsonObject &messageData, int user);
 
+	void responseMessageReady_signal(const QJsonObject &messageData, int user);
+
 	void processMessageDone_signal(int returnCode);
+
+    void sendResponse_signal(const QJsonObject &messageData, int user);
 };
 
