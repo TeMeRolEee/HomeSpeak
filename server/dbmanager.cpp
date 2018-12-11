@@ -6,24 +6,35 @@ DBManager::DBManager(const QString &path) : dataBaseFilePath(path) {
 }
 
 bool DBManager::initDataBase() {
-    QSqlDatabase::addDatabase("QSQLITE");
+    database = QSqlDatabase::addDatabase("QSQLITE");
 
     database.setDatabaseName(dataBaseFilePath);
 
-    QSqlQuery createUsersTableQuery("CREATE TABLE `users` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, `name` TEXT NOT NULL, `email` TEXT NOT NULL UNIQUE, `password` TEXT NOT NULL UNIQUE )");
 
-	QSqlQuery createOnlineUsersQuery("CREATE TABLE `onlineUsers` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `userID` INTEGER NOT NULL UNIQUE, `roomID` INTEGER NOT NULL )");
 
-	QSqlQuery createRoomsUsersQuery("CREATE TABLE `rooms` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `roomName` TEXT NOT NULL )");
-    qDebug() << "asd";
-	if (database.open() &&
-			createUsersTableQuery.exec() &&
-			createOnlineUsersQuery.exec() &&
-			createRoomsUsersQuery.exec()) {
-		database.close();
-		return true;
-	}
-	return false;
+	if (database.open()) {
+        QSqlQuery createUsersTableQuery("CREATE TABLE IF NOT EXISTS `users` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, `name` TEXT NOT NULL, `email` TEXT NOT NULL UNIQUE, `password` TEXT NOT NULL UNIQUE )");
+
+        QSqlQuery createOnlineUsersQuery("CREATE TABLE IF NOT EXISTS `onlineUsers` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `userID` INTEGER NOT NULL UNIQUE, `roomID` INTEGER NOT NULL )");
+
+        QSqlQuery createRoomsUsersQuery("CREATE TABLE IF NOT EXISTS `rooms` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `roomName` TEXT NOT NULL )");
+
+        if (createUsersTableQuery.exec()
+            && createOnlineUsersQuery.exec()
+            && createRoomsUsersQuery.exec()) {
+                database.close();
+                return true;
+        } else {
+            database.close();
+            return true;
+        }
+	} else {
+        QTextStream output(stdout);
+        output << QStringLiteral("Couldn't connect to database");
+        output.flush();
+
+        return false;
+    }
 }
 
 bool DBManager::checkUserIDExists(const QString &id) {
