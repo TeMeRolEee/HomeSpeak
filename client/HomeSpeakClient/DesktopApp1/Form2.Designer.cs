@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             this.panel2 = new System.Windows.Forms.Panel();
+            this.serverIPBox = new System.Windows.Forms.TextBox();
             this.EmailBox = new System.Windows.Forms.TextBox();
             this.passwordBox = new System.Windows.Forms.TextBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -58,6 +59,7 @@
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(66)))), ((int)(((byte)(82)))));
             this.panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel2.BackgroundImage")));
             this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel2.Controls.Add(this.serverIPBox);
             this.panel2.Controls.Add(this.EmailBox);
             this.panel2.Controls.Add(this.passwordBox);
             this.panel2.Controls.Add(this.pictureBox5);
@@ -69,6 +71,18 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(431, 337);
             this.panel2.TabIndex = 3;
+            // 
+            // serverIPBox
+            // 
+            this.serverIPBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.serverIPBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.serverIPBox.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.serverIPBox.ForeColor = System.Drawing.SystemColors.Window;
+            this.serverIPBox.Location = new System.Drawing.Point(132, 150);
+            this.serverIPBox.Multiline = true;
+            this.serverIPBox.Name = "serverIPBox";
+            this.serverIPBox.Size = new System.Drawing.Size(166, 25);
+            this.serverIPBox.TabIndex = 10;
             // 
             // EmailBox
             // 
@@ -98,7 +112,7 @@
             // 
             this.pictureBox5.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(143, 120);
+            this.pictureBox5.Location = new System.Drawing.Point(144, 93);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(142, 45);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -243,8 +257,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TextBox UsernameBox;
         private MaterialSkin.Controls.MaterialRaisedButton LoginButton;
         private System.Windows.Forms.TextBox passwordBox;
@@ -257,5 +269,7 @@
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.TextBox EmailBox;
+        private System.Windows.Forms.TextBox serverIPBox;
+        private System.Windows.Forms.Panel panel2;
     }
 }

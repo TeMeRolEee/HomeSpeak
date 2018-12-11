@@ -13,8 +13,7 @@ using System.Windows.Forms;
 namespace DesktopApp1
 {
     public partial class Form2 : Form
-    {
-        
+    {        
         public Form2()
         {
             InitializeComponent();
@@ -25,8 +24,10 @@ namespace DesktopApp1
             LoginData.Instance.username = UsernameBox.Text.ToString();
             LoginData.Instance.password = passwordBox.Text.ToString();
             LoginData.Instance.email = EmailBox.Text.ToString();
+            IpconnectionData.Instance.hostName = serverIPBox.Text.ToString();
+            Console.WriteLine("{0}", IpconnectionData.Instance.hostName.ToString());
             Boolean validLoginData = LoginData.Instance.Login();
-            
+
             if (validLoginData == false)
             {
                 MessageBox.Show("Invalid username or password");
@@ -60,6 +61,9 @@ namespace DesktopApp1
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            this.serverIPBox.Enter += new EventHandler(serverIPBox_Enter);
+            this.serverIPBox.Leave += new EventHandler(serverIPBox_Leave);
+            serverIPBox_SetText();
             this.UsernameBox.Enter += new EventHandler(UsernameBox_Enter);
             this.UsernameBox.Leave += new EventHandler(UsernameBox_Leave);
             UsernameBox_SetText();
@@ -70,6 +74,11 @@ namespace DesktopApp1
             this.EmailBox.Leave += new EventHandler(EmailBox_Leave);
             EmailBox_SetText();
 
+        }
+        protected void serverIPBox_SetText()
+        {
+            this.serverIPBox.Text = "Server Address";
+            UsernameBox.ForeColor = Color.Gray;
         }
         protected void UsernameBox_SetText()
         {
@@ -121,6 +130,20 @@ namespace DesktopApp1
                 return;
             EmailBox.Text = "";
             EmailBox.ForeColor = Color.White;
+        }
+
+        private void serverIPBox_Enter(object sender, EventArgs e)
+        {
+            if (serverIPBox.ForeColor == Color.White)
+                return;
+            serverIPBox.Text = "";
+            serverIPBox.ForeColor = Color.White;
+        }
+
+        private void serverIPBox_Leave(object sender, EventArgs e)
+        {
+            if (serverIPBox.Text.Trim() == "")
+                serverIPBox_SetText();
         }
         private void SendLoginEnter(object sender, KeyEventArgs e)
         {
