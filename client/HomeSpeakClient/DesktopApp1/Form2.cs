@@ -78,7 +78,7 @@ namespace DesktopApp1
         protected void serverIPBox_SetText()
         {
             this.serverIPBox.Text = "Server Address";
-            UsernameBox.ForeColor = Color.Gray;
+            serverIPBox.ForeColor = Color.Gray;
         }
         protected void UsernameBox_SetText()
         {
