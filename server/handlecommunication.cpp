@@ -12,7 +12,7 @@ HandleCommunication::HandleCommunication() {
 	dbManager = new DBManager("server.sqlite");
 	dbManager->initDataBase();
 
-	connect(this, &HandleCommunication::parsingDone_signal, this, &HandleCommunication::processMessage_slot);
+	//connect(this, &HandleCommunication::parsingDone_signal, this, &HandleCommunication::processMessage_slot);
 }
 
 HandleCommunication::~HandleCommunication() {
@@ -25,17 +25,23 @@ void HandleCommunication::parseJson_slot(const QByteArray &messageData, int user
 }
 
 void HandleCommunication::processMessage_slot(const QJsonObject &messageData, int user) {
+    qDebug() << "processMessage_slot" << user
+    << messageData.value("type");
 	switch (messageData.value("type").toInt()) {
 		case static_cast<int>(MessageTypes::CONNECTION_REQUEST):
+		    qDebug() << "CONNECTION_REQUEST WTF IS THIS";
 			handleConnectionRequest(messageData, user);
 			break;
 		case static_cast<int>(MessageTypes::DISCONNECT):
-			handleDisconnection(messageData, user);
+            qDebug() << "";
+		    handleDisconnection(messageData, user);
 			break;
 		case static_cast<int>(MessageTypes::TEXT_MESSAGE):
+            qDebug() << "TEXT_MESSAGE";
 			handleTextMessage(messageData, user);
 			break;
 		case static_cast<int>(MessageTypes::VOICE_MESSAGE):
+            qDebug() << "";
 			break;
 		case static_cast<int>(MessageTypes::SWITCH_ROOM):
 			handleSwitchRoom(messageData, user);
@@ -56,44 +62,53 @@ void HandleCommunication::processMessage_slot(const QJsonObject &messageData, in
 			handleRegistrationRequest(messageData, user);
 			break;
 		default:
+		    qDebug() << "wtf";
 			break;
 	}
 }
 
 void HandleCommunication::handleConnectionRequest(const QJsonObject &messageData, int user) {
-    if (dbManager->checkUserEmail(messageData.value("email").toString()) &&
-    dbManager->checkPassword(messageData.value("email").toString(), messageData.value("password").toString())) {
-        QJsonObject response;
-        response.insert("type", 0);
-        response.insert("status", 1);
-        QJsonArray dataArray;
+    /*if (!(dbManager->checkUserEmail(messageData.value("email").toString()))) {
+        qDebug() << "Registering user";
+        handleRegistrationRequest(messageData, user);
+    }*/
 
-        QJsonObject tokenObject;
+    QJsonObject response;
+    response.insert("type", 0);
+    response.insert("status", 1);
+    QJsonArray dataArray;
 
-		QString id(dbManager->getUserID(messageData.value("email").toString()));
+    QJsonObject tokenObject;
 
-        QString token = QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Sha3_256);
+    //QString id(dbManager->getUserID(messageData.value("email").toString()));
+    QString id(QCryptographicHash::hash(messageData.value("email").toString().toUtf8(), QCryptographicHash::Sha3_256));
+    QString token = QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Sha3_256);
 
-        tokenObject.insert("token", token);
+    tokenObject.insert("token", token);
 
-        dataArray.append(tokenObject);
+    dataArray.append(tokenObject);
 
-        QJsonArray rooms;
+    QJsonArray rooms;
 
-        QJsonObject room0;
+    QJsonObject room0;
 
-        room0.insert("roomID", 0);
+    room0.insert("roomID", 0);
 
-        QJsonArray users = dbManager->getOnlineUsers();
+    QJsonArray users;// = dbManager->getOnlineUsers();
 
-        room0.insert("users", users);
+    room0.insert("users", users);
 
-        rooms.append(room0);
+    rooms.append(room0);
 
-        dbManager->addToOnlineUsers(id.toInt(), 0);
+    response.insert("token", tokenObject);
 
-        emit sendResponse_signal(response, user);
-    }
+    response.insert("rooms", rooms);
+
+    response.insert("users", users);
+
+    //dbManager->addToOnlineUsers(id.toInt(), 0);
+    qDebug() << "sendResponseSignal";
+    emit sendResponse_signal(response, user);
 }
 
 
@@ -103,6 +118,7 @@ void HandleCommunication::handleDisconnection(const QJsonObject &messageData, in
 
 void HandleCommunication::handleTextMessage(const QJsonObject &messageData, int user) {
     emit responseMessageReady_signal(messageData, user);
+    qDebug() << "sendMessageReadySignal";
 }
 
 void HandleCommunication::handleSwitchRoom(const QJsonObject &messageData, int user) {

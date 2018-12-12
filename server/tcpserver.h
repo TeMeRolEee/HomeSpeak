@@ -31,11 +31,11 @@ public slots:
 private:
     QTcpServer *server = nullptr;
     QMap<int, TcpServerThread*> *clients;
-    QVector<QHostAddress*> *clientVector;
+	QMap<int, QHostAddress*> *clientVector;
     int clientCounter = 0;
 
-    void storeIp(const QHostAddress &ipAddress);
+    void storeIp(const QHostAddress &ipAddress, int id);
 
-    int checkIpExists(const QHostAddress &ipAddress);
+    bool checkIpExists(const QHostAddress &ipAddress);
 
 };

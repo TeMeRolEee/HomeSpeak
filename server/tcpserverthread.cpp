@@ -1,6 +1,9 @@
 #include <QtCore/QDataStream>
 #include <QtCore/QJsonDocument>
 #include <QHostAddress>
+#include <QtCore/QJsonObject>
+#include <QtCore/QCryptographicHash>
+#include <QtCore/QJsonArray>
 #include "tcpserverthread.h"
 
 
@@ -11,8 +14,13 @@ TcpServerThread::TcpServerThread(QTcpSocket *socket, int id) : socket(socket),
 }
 
 void TcpServerThread::sendMessage_slot(const QJsonObject &messageData) {
+    socket->open(QIODevice::WriteOnly);
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
+
+    for (auto data : messageData.keys()) {
+        qDebug() << messageData.value(data) << "is about to be sent";
+    }
 
     out << messageData;
 
@@ -44,11 +52,49 @@ void TcpServerThread::run() {
 
     qDebug() << "Total message" << data;
 
-    //socket->write(data);
+    QJsonObject messageObject = QJsonDocument::fromJson(data).object();
 
-    emit messageRecieved_signal(data, id);
+    QJsonObject response;
+    response.insert("type", 0);
+    response.insert("status", 1);
 
-    this->exec();
+    QJsonArray dataArray;
+
+    QJsonObject tokenObject;
+
+    //QString id(dbManager->getUserID(messageData.value("email").toString()));
+    QString id(QCryptographicHash::hash(messageObject.value("email").toString().toUtf8(), QCryptographicHash::Sha3_256));
+    QString token = QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Sha3_256);
+
+    tokenObject.insert("token", token);
+
+    dataArray.append(tokenObject);
+
+    QJsonArray rooms;
+
+    QJsonObject room0;
+
+    room0.insert("roomID", 0);
+
+    QJsonArray users;// = dbManager->getOnlineUsers();
+
+    room0.insert("users", users);
+
+    rooms.append(room0);
+
+    response.insert("token", tokenObject);
+
+    response.insert("rooms", rooms);
+
+    response.insert("users", users);
+
+    QJsonDocument document(response);
+
+    socket->write(document.toJson());
+
+    //emit messageRecieved_signal(data, id);
+
+    //this->exec();
     //socket->flush();
 /*
     while (socket->isOpen()) {
