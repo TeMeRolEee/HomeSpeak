@@ -1,12 +1,32 @@
 #pragma once
 
+#include <QThread>
+#include <QUuid>
+
 #include "tcpserver.h"
 
-class Core {
+class Core : public QThread {
 public:
-    Core();
-    ~Core();
-    TcpServer *tcpServer;
+	Core();
+
+	~Core() override;
+
+	void init();
+
+protected:
+	void run() override;
+
+private:
+	bool readSettings(const QString &filePath);
+
+	TcpServer *tcpServer;
+
+public slots:
+
+	void startTcpServer_slot();
+
+signals:
+	void startTcpServer_signal();
 };
 
 
